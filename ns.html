@@ -24,7 +24,7 @@
         margin: 30px auto;
     }
     .testBlocks {
-        width: 60%;
+        width: 100%;
         margin: 0 auto;
         display: flex;
         justify-content: space-around;
@@ -121,6 +121,22 @@
             <h2>Блок 6</h2>
             <img class="obrazec-noise" src="./img/01.png" alt="" id='block6' data-block='6'>
         </div>
+        <div class="singleTestBlock">
+            <h2>Блок 0++</h2>
+            <img class="obrazec-noise" src="./img/200.png" alt="" id='block7' data-block='7'>
+        </div>
+        <div class="singleTestBlock">
+            <h2>Блок 5+</h2>
+            <img class="obrazec-noise" src="./img/205.png" alt="" id='block8' data-block='8'>
+        </div>
+        <div class="singleTestBlock">
+            <h2>Блок 6-</h2>
+            <img class="obrazec-noise" src="./img/206.png" alt="" id='block9' data-block='9'>
+        </div>
+        <div class="singleTestBlock">
+            <h2>Блок 7+</h2>
+            <img class="obrazec-noise" src="./img/207.png" alt="" id='block10' data-block='10'>
+        </div>
     </div>
 
 
@@ -137,8 +153,8 @@ document.addEventListener("DOMContentLoaded", function(){
 
     let n = 25
     let m = 10
-    let F = n/2
-    let e = 0.3
+    let F = 100
+    let e = 0.0001
     let E = 0.1
 
     // формула активации
@@ -147,7 +163,7 @@ document.addEventListener("DOMContentLoaded", function(){
             return 0
         if (num < F)
             return num
-        return F
+        return num
     }
     // функция очистки фона, перед каждым новым запуском программы
     const clearBackground = () => {
@@ -193,19 +209,19 @@ document.addEventListener("DOMContentLoaded", function(){
     let ex114 = [-1,1,1,1,1, -1,-1,-1,-1,1, -1,-1,-1,-1,1, -1,-1,-1,-1,1, -1,1,1,1,1]
     let ex115 = [1,1,1,1,1, 1,1,-1,-1,1, 1,-1,-1,-1,1, 1,-1,-1,1,1, 1,1,1,1,1]
     let ex116 = [-1,-1,-1,-1,1, -1,-1,-1,-1,1, -1,-1,-1,-1,1, -1,-1,-1,-1,1, -1,-1,-1,-1,1]
+    //
+    let ex200 = [1,1,1,1,1, -1,1,-1,-1,1, -1,1,-1,-1,1, -1,1,-1,-1,1, 1,1,1,1,1]
+    let ex205 = [-1,1,1,1,1, -1,1,-1,-1,-1, -1,1,1,1,1, -1,-1,-1,-1,1, 1,1,1,1,1]
+    let ex206 = [-1,1,1,1,-1, -1,1,-1,-1,-1, -1,1,1,1,1, -1,1,-1,-1,1, -1,-1,1,1,1]
+    let ex207 = [1,1,1,1,1, -1,-1,-1,-1,1, -1,-1,-1,-1,1, -1,-1,-1,-1,1, -1,-1,-1,-1,1]
 
     let noiseArr = []
-    noiseArr.push(ex111);noiseArr.push(ex112);noiseArr.push(ex113);noiseArr.push(ex114);noiseArr.push(ex115);noiseArr.push(ex116);
+    noiseArr.push(ex111);noiseArr.push(ex112);noiseArr.push(ex113);noiseArr.push(ex114);noiseArr.push(ex115);noiseArr.push(ex116);noiseArr.push(ex200);noiseArr.push(ex205);noiseArr.push(ex206);noiseArr.push(ex207);
 
 
 
     // а теперь запустим функцию, котрая найдет подходящий рисунок
     let out = document.getElementById("output");
-    let obrazec1 = document.getElementById('block1')
-    let obrazec2 = document.getElementById('block2')
-    let obrazec3 = document.getElementById('block3')
-    let obrazec4 = document.getElementById('block4')
-    let obrazec5 = document.getElementById('block5')
 
     let noises = document.getElementsByClassName('obrazec-noise')
     Array.prototype.forEach.call(noises, function(e){
@@ -215,18 +231,6 @@ document.addEventListener("DOMContentLoaded", function(){
             findMatches(noiseArr[blockIdx -1])
         })
     })
-
-
-    // obrazec1.addEventListener('click', function(){
-    //     noise1 = [1, -1, -1, -1, 1, -1, 1, -1, 1]
-    //     clearBackground()
-    //     findMatches(noise1)
-    // })
-    // obrazec2.addEventListener('click', function(){
-    //     noise1 = [1, 1, 1, -1, -1, -1, 1, 1, 1]
-    //     clearBackground()
-    //     findMatches(noise1)
-    // })
 
 
 
@@ -261,6 +265,7 @@ document.addEventListener("DOMContentLoaded", function(){
             })
             S.push(sum+F)
         })
+        console.log("S = ")
         console.log(S)
 
         // получим вектор y (состоит из эл-тов вектора S, с примененимем ф-ии активации)
@@ -268,6 +273,7 @@ document.addEventListener("DOMContentLoaded", function(){
         for (let el of S) {
             y.push(activation(el, F))
         }
+        console.log("y = ")
         console.log(y)
         
         // y = [4.5, 2, 3]
@@ -289,9 +295,10 @@ document.addEventListener("DOMContentLoaded", function(){
                 sum *= e // умножаем на эпсилон
                 sum = y[step] - sum // вычитаем из предыдущего
                 newY.push( activation(sum, F) ) // и записываем в новый Y функцию активации от sum
-                console.log(newY)
                 step += 1
             }
+            console.log("newY =")
+            console.log(newY)
             // посчитаем норму разности векторов y и newY
             let diff = 0
             for (let i in y) {
