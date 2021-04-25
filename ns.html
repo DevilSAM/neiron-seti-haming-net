@@ -5,12 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Нейронные сети</title>
+    <link rel="stylesheet" href="./bootstrap/dist/css/bootstrap.min.css">
 </head>
 
 <style>
+    .myContainer {
+        background-color: #888;
+        min-height: 1000px;
+        padding: 50px 100px;
+
+    }
+    .row {
+        border: 1px solid goldenrod;
+        border-radius: 10px;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
     .myObrazec {
         display: flex;
         justify-content: space-around;
+        margin-top: 50px;
     }
     .singleObrazec {
         display: flex;
@@ -25,7 +39,7 @@
     }
     .testBlocks {
         width: 100%;
-        margin: 0 auto;
+        margin: 50px auto;
         display: flex;
         justify-content: space-around;
     }
@@ -41,6 +55,10 @@
         border-radius: 10px;
         transition: 0.5s;
     }
+    .obrazec, .obrazec-noise {
+        display: block;
+        margin: 0 auto;
+    }
     #output {
         color: red;
     }
@@ -49,48 +67,37 @@
 
 <body>
 
+    <div class="myContainer">
 
+        <div class="row">
+            <h3 class='mr-3 col-3'>Выберите образцы:</h3>
+            <input type="file" multiple id="loadedObrazcy">
+        </div>
+        
+        <div class="row">
+            <h3 class='mr-3 col-3'>Выберите тесты:</h3>
+            <input type="file" multiple id="loadedTests">
+        </div>
+
+        <button id="applyBtn" class='btn btn-success'> Применить! </button>
+        
+        <div class="myObrazec" id="myObrazecInsertSection">
+        </div>
+
+        <div class="testBlocks" id="myTestBlockInsertSection">
+        </div>
+        
+        <div id="output"></div>
+        <canvas id='canvas' class='d-none' width="5" height="5"></canvas>
+
+    </div>
     
+
+    <!--
     <div class="myObrazec">
         <div class="singleObrazec" id='obr1' data-obr='1'>
             <h2>Образец 1</h2>
             <img class="obrazec" src="./img/01.png" alt="">
-        </div>
-        <div class="singleObrazec" id='obr2' data-obr='2'>
-            <h2>Образец 2</h2>
-            <img class="obrazec" src="./img/02.png" alt="">
-        </div>
-        <div class="singleObrazec" id='obr3' data-obr='3'>
-            <h2>Образец 3</h2>
-            <img class="obrazec" src="./img/03.png" alt="">
-        </div>
-        <div class="singleObrazec" id='obr4' data-obr='3'>
-            <h2>Образец 4</h2>
-            <img class="obrazec" src="./img/04.png" alt="">
-        </div>
-        <div class="singleObrazec" id='obr5' data-obr='3'>
-            <h2>Образец 5</h2>
-            <img class="obrazec" src="./img/05.png" alt="">
-        </div>
-        <div class="singleObrazec" id='obr6' data-obr='3'>
-            <h2>Образец 6</h2>
-            <img class="obrazec" src="./img/06.png" alt="">
-        </div>
-        <div class="singleObrazec" id='obr7' data-obr='3'>
-            <h2>Образец 7</h2>
-            <img class="obrazec" src="./img/07.png" alt="">
-        </div>
-        <div class="singleObrazec" id='obr8' data-obr='3'>
-            <h2>Образец 8</h2>
-            <img class="obrazec" src="./img/08.png" alt="">
-        </div>
-        <div class="singleObrazec" id='obr9' data-obr='3'>
-            <h2>Образец 9</h2>
-            <img class="obrazec" src="./img/09.png" alt="">
-        </div>
-        <div class="singleObrazec" id='obr10' data-obr='3'>
-            <h2>Образец 10</h2>
-            <img class="obrazec" src="./img/10.png" alt="">
         </div>
     </div>
 
@@ -101,54 +108,19 @@
             <h2>Блок 1</h2>
             <img class="obrazec-noise" src="./img/111.png" alt="" id='block1' data-block='1'>
         </div>
-        <div class="singleTestBlock">
-            <h2>Блок 2</h2>
-            <img class="obrazec-noise" src="./img/112.png" alt="" id='block2' data-block='2'>
-        </div>
-        <div class="singleTestBlock">
-            <h2>Блок 3</h2>
-            <img class="obrazec-noise" src="./img/113.png" alt="" id='block3' data-block='3'>
-        </div>
-        <div class="singleTestBlock">
-            <h2>Блок 4</h2>
-            <img class="obrazec-noise" src="./img/114.png" alt="" id='block4' data-block='4'>
-        </div>
-        <div class="singleTestBlock">
-            <h2>Блок 5</h2>
-            <img class="obrazec-noise" src="./img/115.png" alt="" id='block5' data-block='5'>
-        </div>
-        <div class="singleTestBlock">
-            <h2>Блок 6</h2>
-            <img class="obrazec-noise" src="./img/01.png" alt="" id='block6' data-block='6'>
-        </div>
-        <div class="singleTestBlock">
-            <h2>Блок 0++</h2>
-            <img class="obrazec-noise" src="./img/200.png" alt="" id='block7' data-block='7'>
-        </div>
-        <div class="singleTestBlock">
-            <h2>Блок 5+</h2>
-            <img class="obrazec-noise" src="./img/205.png" alt="" id='block8' data-block='8'>
-        </div>
-        <div class="singleTestBlock">
-            <h2>Блок 6-</h2>
-            <img class="obrazec-noise" src="./img/206.png" alt="" id='block9' data-block='9'>
-        </div>
-        <div class="singleTestBlock">
-            <h2>Блок 7+</h2>
-            <img class="obrazec-noise" src="./img/207.png" alt="" id='block10' data-block='10'>
-        </div>
     </div>
+    -->
 
 
-    <div id="output"></div>
     
-
+<script src="./jquery/dist/jquery.min.js"></script>
+<script src="./bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="https://www.dukelearntoprogram.com/course1/common/js/image/SimpleImage.js"></script>
 <script>
 
 document.addEventListener("DOMContentLoaded", function(){
 
-
+    
     // подготовительные данные
 
     let n = 25
@@ -174,64 +146,104 @@ document.addEventListener("DOMContentLoaded", function(){
         })
     }
 
-    // выписанные эталоны (картинки крестика и тд)
-    // let ex1 = [1, -1, 1, -1, 1, -1, 1, -1, 1]
-    // let ex2 = [-1, 1, -1, 1, 1, 1, -1, 1, -1]
-    // let ex3 = [1, 1, 1, 1, -1, 1, 1, 1, 1]
-    // // наша матрица Х
-    // let X = [
-    //     [1, -1, 1, -1, 1, -1, 1, -1, 1],
-    //     [-1, 1, -1, 1, 1, 1, -1, 1, -1],
-    //     [1, 1, 1, 1, -1, 1, 1, 1, 1]
-    // ]
-    // // зашумленный экземпляр
-    // let noise1 = [1, -1, -1, -1, 1, -1, 1, -1, 1]
-
-    // выписанные эталоны (картинки цифр)
-    let ex1 = [-1,-1,-1,-1,1, -1,-1,-1,-1,1, -1,-1,-1,-1,1, -1,-1,-1,-1,1, -1,-1,-1,-1,1]
-    let ex2 = [-1,1,1,1,1, -1,-1,-1,-1,1, -1,1,1,1,1, -1,1,-1,-1,-1, -1,1,1,1,1]
-    let ex3 = [-1,1,1,1,1, -1,-1,-1,-1,1, -1,1,1,1,1, -1,-1,-1,-1,1, -1,1,1,1,1]
-    let ex4 = [-1,1,-1,-1,1, -1,1,-1,-1,1, -1,1,1,1,1, -1,-1,-1,-1,1, -1,-1,-1,-1,1]
-    let ex5 = [-1,1,1,1,1, -1,1,-1,-1,-1, -1,1,1,1,1, -1,-1,-1,-1,1, -1,1,1,1,1]
-    let ex6 = [-1,1,1,1,-1, -1,1,-1,-1,-1, -1,1,1,1,1, -1,1,-1,-1,1, -1,1,1,1,1]
-    let ex7 = [-1,1,1,1,1, -1,-1,-1,-1,1, -1,-1,-1,-1,1, -1,-1,-1,-1,1, -1,-1,-1,-1,1]
-    let ex8 = [-1,1,1,1,1, -1,1,-1,-1,1, -1,1,1,1,1, -1,1,-1,-1,1, -1,1,1,1,1]
-    let ex9 = [-1,1,1,1,1, -1,1,-1,-1,1, -1,1,1,1,1, -1,-1,-1,-1,1, -1,-1,1,1,1]
-    let ex10 = [-1,1,1,1,1, -1,1,-1,-1,1, -1,1,-1,-1,1, -1,1,-1,-1,1, -1,1,1,1,1]
 
     let X = []
-    X.push(ex1);X.push(ex2);X.push(ex3);X.push(ex4);X.push(ex5);X.push(ex6);X.push(ex7);X.push(ex8);X.push(ex9);X.push(ex10);
-
-    // зашумленные экземпляры
-    let ex111 = [-1,-1,-1,-1,-1, -1,-1,-1,-1,-1, -1,-1,-1,-1,1, -1,-1,-1,-1,1, -1,1,1,1,1]
-    let ex112 = [-1,-1,1,1,-1, 1,-1,-1,-1,-1, 1,-1,-1,-1,1, -1,-1,-1,-1,1, -1,1,1,-1,-1]
-    let ex113 = [-1,-1,1,1,-1, 1,-1,1,-1,-1, 1,1,1,1,1, -1,-1,1,-1,1, -1,1,1,-1,-1]
-    let ex114 = [-1,1,1,1,1, -1,-1,-1,-1,1, -1,-1,-1,-1,1, -1,-1,-1,-1,1, -1,1,1,1,1]
-    let ex115 = [1,1,1,1,1, 1,1,-1,-1,1, 1,-1,-1,-1,1, 1,-1,-1,1,1, 1,1,1,1,1]
-    let ex116 = [-1,-1,-1,-1,1, -1,-1,-1,-1,1, -1,-1,-1,-1,1, -1,-1,-1,-1,1, -1,-1,-1,-1,1]
-    //
-    let ex200 = [1,1,1,1,1, -1,1,-1,-1,1, -1,1,-1,-1,1, -1,1,-1,-1,1, 1,1,1,1,1]
-    let ex205 = [-1,1,1,1,1, -1,1,-1,-1,-1, -1,1,1,1,1, -1,-1,-1,-1,1, 1,1,1,1,1]
-    let ex206 = [-1,1,1,1,-1, -1,1,-1,-1,-1, -1,1,1,1,1, -1,1,-1,-1,1, -1,-1,1,1,1]
-    let ex207 = [1,1,1,1,1, -1,-1,-1,-1,1, -1,-1,-1,-1,1, -1,-1,-1,-1,1, -1,-1,-1,-1,1]
 
     let noiseArr = []
-    noiseArr.push(ex111);noiseArr.push(ex112);noiseArr.push(ex113);noiseArr.push(ex114);noiseArr.push(ex115);noiseArr.push(ex116);noiseArr.push(ex200);noiseArr.push(ex205);noiseArr.push(ex206);noiseArr.push(ex207);
 
-    let si1 = new SimpleImage("./img/01.png")
-
-
-    // а теперь запустим функцию, котрая найдет подходящий рисунок
-    let out = document.getElementById("output");
-
-    let noises = document.getElementsByClassName('obrazec-noise')
-    Array.prototype.forEach.call(noises, function(e){
-        e.addEventListener('click', function(el){
-            let blockIdx = el.target.dataset.block
-            clearBackground()
-            findMatches(noiseArr[blockIdx -1])
+    function getData(name) {
+        return new Promise((resolve, reject) => {
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            const image = new Image();
+            image.addEventListener('load', () => {
+                canvas.width = image.width;
+                canvas.height = image.height;
+                ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                resolve(imageData);
+            }, false);
+            image.src = `./img/${name}`;
         })
+    }
+
+
+
+    document.getElementById('applyBtn').addEventListener('click', function(e){
+
+        
+
+
+        // отрисовка картинок-образцов
+        let out1 = document.getElementById('myObrazecInsertSection');
+        let files1 = document.getElementById('loadedObrazcy').files
+        for (let i = 0; i < files1.length; i++) {
+            out1.innerHTML += `
+            <div class="singleObrazec" id='obr${i}' data-obr='${i}'>
+                <h4>Образец ${i}</h4>
+                <img class="obrazec" src="./img/${files1[i].name}" alt="" id="imgnum${i}">
+            </div>
+            `
+            let data = getData(files1[i].name)
+            data.then((value) => {
+                console.log(value)
+                let ex = []
+                for (let k = 1; k < value.data.length; k += 4) {
+                    if (value.data[k] < 200) {
+                        ex.push(1)
+                    } else {
+                        ex.push(-1)
+                    }
+                }
+                X.push(ex)
+            });
+        }
+
+        // отрисовка картинок-тестов
+        let out2 = document.getElementById('myTestBlockInsertSection')
+        let files2 = document.getElementById('loadedTests').files
+        for (let i = 0; i < files2.length; i++) {
+            out2.innerHTML += `
+            <div class="singleTestBlock">
+                <h4>Тест ${i}</h4>
+                <img class="obrazec-noise" src="./img/${files2[i].name}" alt="" id='block${i}' data-block='${i}'>
+            </div>
+            `
+            let data = getData(files2[i].name)
+            data.then((value) => {
+                console.log(value)
+                let ex = []
+                for (let k = 1; k < value.data.length; k += 4) {
+                    if (value.data[k] < 200) {
+                        ex.push(1)
+                    } else {
+                        ex.push(-1)
+                    }
+                }
+                noiseArr.push(ex)
+            });
+        }
+
+        setTimeout(() => {
+            weAreReady()
+        }, 1000);
+
+
     })
+
+    function weAreReady() {
+        // а теперь запустим функцию, которая найдет подходящий рисунок
+        let noises = document.getElementsByClassName('obrazec-noise')
+        Array.prototype.forEach.call(noises, function(e){
+            e.addEventListener('click', function(el){
+                let blockIdx = el.target.dataset.block
+                clearBackground()
+                findMatches(noiseArr[blockIdx])
+            })
+        })
+    }
+
+    let out = document.getElementById("output");
 
 
 
@@ -322,7 +334,7 @@ document.addEventListener("DOMContentLoaded", function(){
         let maxEl = Math.max.apply(null, y)
         // если таких элементов несколько, то ответа нет (одинаково похож на несколько образцов)
         if (y.filter(x => x == maxEl).length === 1) {
-            let idx = y.indexOf(maxEl)+1
+            let idx = y.indexOf(maxEl)
             let txt = `Самый подходящий бразец -> ${idx}`
             out.innerHTML = `<h2>${txt}</h2>`
             document.getElementById(`obr${idx}`).style = "border: 10px dashed green; border-radius: 10px; background-color: greenyellow"
@@ -340,23 +352,6 @@ document.addEventListener("DOMContentLoaded", function(){
         }
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
