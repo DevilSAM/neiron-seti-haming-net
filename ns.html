@@ -27,6 +27,7 @@
         margin-top: 50px;
     }
     .singleObrazec {
+        padding: 10px;
         display: flex;
         flex-direction: column;
     }
@@ -44,6 +45,7 @@
         justify-content: space-around;
     }
     .singleTestBlock {
+        padding: 10px;
         display: flex;
         flex-direction: column;
         transition: 0.5s;
@@ -51,7 +53,7 @@
         border-radius: 10px;
     }
     .singleTestBlock:hover {
-        border: 10px solid skyblue;
+        background-color: skyblue;
         border-radius: 10px;
         transition: 0.5s;
     }
@@ -60,7 +62,8 @@
         margin: 0 auto;
     }
     #output {
-        color: red;
+        font-family: Arial, Helvetica, sans-serif;
+        color: white;
     }
 
 </style>
@@ -343,8 +346,8 @@ document.addEventListener("DOMContentLoaded", function(){
             let txt = ""
             for (let i in y) {
                 if (maxEl == y[i]) {
-                    document.getElementById(`obr${parseInt(i,10)+1}`).style = "border: 10px dashed orange; border-radius: 10px; background-color: yellow"
-                    txt += (parseInt(i,10)+1) + " "
+                    document.getElementById(`obr${parseInt(i,10)}`).style = "border: 10px dashed orange; border-radius: 10px; background-color: yellow"
+                    txt += (parseInt(i,10)) + " "
                 }
             }
 
